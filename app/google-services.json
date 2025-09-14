@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "447061747743",
+    "project_id": "thutonexo-5d08d",
+    "storage_bucket": "thutonexo-5d08d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447061747743:android:191bd72d0256ba8d880d2a",
+        "android_client_info": {
+          "package_name": "com.example.chatappexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447061747743-puiem0m5ik91s13r1tk8flptvv5h1j1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatappexample",
+            "certificate_hash": "afcd834889508c64ce576e76361df46cf83af524"
+          }
+        },
+        {
+          "client_id": "447061747743-rkaa17m88c571t26knl0icotpiknbifk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxIAw2K0MiFKyJxVr9uhNbdqALDi0eFTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447061747743-rkaa17m88c571t26knl0icotpiknbifk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447061747743:android:2db3c875cb6ab973880d2a",
+        "android_client_info": {
+          "package_name": "com.example.thutonexo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447061747743-rkaa17m88c571t26knl0icotpiknbifk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxIAw2K0MiFKyJxVr9uhNbdqALDi0eFTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447061747743-rkaa17m88c571t26knl0icotpiknbifk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
