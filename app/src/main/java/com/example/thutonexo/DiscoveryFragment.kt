@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.example.thutonexo.R
 import com.example.thutonexo.User
 import com.example.thutonexo.UserAdapter
+import com.google.android.material.appbar.MaterialToolbar
 
 class DiscoveryFragment : Fragment() {
 
@@ -40,6 +41,14 @@ class DiscoveryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /* 1.  MAKE THE TOOLBAR THE ACTION-BAR → title shows  */
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
+        (requireActivity() as androidx.appcompat.app.AppCompatActivity).apply {
+            setSupportActionBar(toolbar)
+            supportActionBar?.title = "Discover Chats"   // ← add this line
+            supportActionBar?.setDisplayShowTitleEnabled(true)
+        }
 
         recyclerView = view.findViewById(R.id.userRecyclerView)
         searchBar = view.findViewById(R.id.searchBar)

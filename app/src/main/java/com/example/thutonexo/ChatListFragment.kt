@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,17 +18,29 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
+import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChatListFragment : Fragment() {
 
+class ChatListFragment : Fragment() {
+    /* ----------  UI  ---------- */
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ChatListAdapter
+    private lateinit var userAvatar: CircleImageView
+    private lateinit var userName: TextView
+    private lateinit var userStatus: TextView
+
+    /* ----------  DATA  ---------- */
     private val chatList = mutableListOf<ChatListModel>()
     private val db = FirebaseFirestore.getInstance()
     private val currentUserId = FirebaseAuth.getInstance().uid!!
     private val userListeners = mutableMapOf<String, ListenerRegistration>()
+
+    /* -------------------- NEW: listener for OWN user doc -------------------- */
+    private var ownUserListener: ListenerRegistration? = null
+    /* ----------------------------------------------------------------------- */
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +51,11 @@ class ChatListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        /* ----------  find views  ---------- */
+        userAvatar = view.findViewById(R.id.userAvatar)
+        userName   = view.findViewById(R.id.userName)
+        userStatus = view.findViewById(R.id.userStatus)
 
         recyclerView = view.findViewById(R.id.chatRecyclerView)
         adapter = ChatListAdapter(chatList) { chat ->
@@ -50,6 +69,7 @@ class ChatListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         loadChats()
+        loadOwnUserInfo()
     }
 
     override fun onDestroyView() {
@@ -57,13 +77,42 @@ class ChatListFragment : Fragment() {
         userListeners.values.forEach { it.remove() }
     }
 
+    /* -------------------- NEW: load OWN user document -------------------- */
+    private fun loadOwnUserInfo() {
+        ownUserListener = db.collection("users")
+            .document(currentUserId)
+            .addSnapshotListener { doc, error ->
+                if (error != null || doc == null || !doc.exists()) return@addSnapshotListener
+
+                val name   = doc.getString("name") ?: "Me"
+                val status  = doc.getString("bio")  ?: "No bio"   // <-- changed from "status"
+                val b64    = doc.getString("profileImage") ?: ""
+
+                userName.text   = name
+                userStatus.text = status
+
+                if (b64.isNotEmpty()) {
+                    try {
+                        val bytes = Base64.decode(b64, Base64.DEFAULT)
+                        val bmp   = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        userAvatar.setImageBitmap(bmp)
+                    } catch (e: Exception) {
+                        userAvatar.setImageResource(R.drawable.ic_profile) // fallback
+                    }
+                } else {
+                    userAvatar.setImageResource(R.drawable.ic_profile)
+                }
+            }
+    }
+
     private fun loadChats() {
-        // Remove old listeners
+        /* ---- 1.  clear old listeners ---- */
         userListeners.values.forEach { it.remove() }
         userListeners.clear()
         chatList.clear()
         adapter.notifyDataSetChanged()
 
+        /* ---- 2.  listen for chats (newest first) ---- */
         db.collection("chats")
             .whereArrayContains("participants", currentUserId)
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -102,7 +151,7 @@ class ChatListFragment : Fragment() {
                                         SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(it))
                                     } ?: ""
 
-                                    // 🔹 Now fetch unread count
+                                    // Fetch unread count
                                     db.collection("chats").document(chatId)
                                         .collection("messages")
                                         .whereEqualTo("read", false)

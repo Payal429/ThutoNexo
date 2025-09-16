@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     private val chatListFragment = ChatListFragment()
     private val discoveryFragment = DiscoveryFragment()
+    private val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> loadFragment(chatListFragment)
                 R.id.nav_discover -> loadFragment(discoveryFragment)
+                R.id.nav_profile -> loadFragment(profileFragment)
                 else -> false
             }
         }
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
         return true
     }
+
 }
 /*
 class MainActivity : AppCompatActivity() {
