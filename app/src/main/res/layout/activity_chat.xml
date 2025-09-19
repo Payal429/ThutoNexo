@@ -43,21 +43,54 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="6dp">
 
-            <EditText
-                android:id="@+id/messageInput"
+            <!-- EditText + Attach buttons -->
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Type a message"
-                android:maxLines="6"
-                android:fontFamily="@font/anek_gujarati"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="10dp"
-                android:textColor="@color/black"
-                android:background="@drawable/bg_input"
-                android:textColorHint="#8A000000"
-                android:textSize="18sp"/>
+                android:layout_weight="1">
 
+                <EditText
+                    android:id="@+id/messageInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type a message"
+                    android:maxLines="6"
+                    android:paddingEnd="110dp"
+                    android:fontFamily="@font/anek_gujarati"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/bg_input"
+                    android:textColorHint="#8A000000"
+                    android:textSize="18sp"/>
+
+                <!-- Attachment button -->
+                <ImageButton
+                    android:id="@+id/attachButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="60dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_attach"
+                    android:contentDescription="Attach File"
+                    app:tint="@color/green"/>
+
+                <!-- Camera button -->
+                <ImageButton
+                    android:id="@+id/attachImageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="5dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_camera"
+                    android:contentDescription="Attach Image"
+                    app:tint="@color/green"/>
+
+            </FrameLayout>
+
+            <!-- Send button -->
             <ImageButton
                 android:id="@+id/sendButton"
                 android:layout_width="50dp"

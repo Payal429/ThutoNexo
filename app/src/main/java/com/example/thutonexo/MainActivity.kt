@@ -18,6 +18,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Change status bar color
+        window.statusBarColor = getColor(R.color.light_purple) // your desired color
+
+        // Optional: make status bar icons dark or light
+        window.decorView.systemUiVisibility = 0 // 0 = light icons, or use SYSTEM_UI_FLAG_LIGHT_STATUS_BAR for dark icons
+
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
         // Determine which fragment to load
